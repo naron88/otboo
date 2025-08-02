@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew clean build --exclude-task test
 
       - name: Docker image build
-        run: docker build -t narone88/otboo:latest .
+        run: docker build -t buzzin2426/otboo:latest .
 
       - name: DockerHub login
         uses: docker/login-action@v2
@@ -37,7 +37,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Docker image
-        run: docker push narone88/otboo:latest
+        run: docker push buzzin2426/otboo:latest
 
       - name: Get GitHub Actions public IP
         id: ip
@@ -65,9 +65,9 @@ jobs:
           script: |
             sudo docker stop dnd2 || true
             sudo docker rm dnd2 || true
-            sudo docker rmi narone88/otboo:latest || true
-            sudo docker pull narone88/otboo:latest
-            sudo docker run -it -d -p 8080:8080 --name narone88 narone88/otboo:latest
+            sudo docker rmi buzzin2426/otboo:latest || true
+            sudo docker pull buzzin2426/otboo:latest
+            sudo docker run -it -d -p 8080:8080 --name buzzin2426 buzzin2426/otboo:latest
 
       - name: Remove GitHub IP from AWS security group
         run: |
