@@ -55,15 +55,17 @@ jobs:
           aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
 
       - name: Decode SSH key
-        run: echo "${{ secrets.EC2_SSH_KEY_BASE64 }}" | base64 -d > ./key.pem
-        shell: bash
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > key.pem
+          KEY_CONTENT=$(cat key.pem)
+          echo "::set-output name=key::$KEY_CONTENT"
 
       - name: SSH to EC2 and deploy Docker container
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
-          key: ./key.pem
+          key: ${{ steps.decode_key.outputs.key }}
           port: 22
           timeout: 60s
           script: |
