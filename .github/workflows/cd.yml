@@ -63,11 +63,11 @@ jobs:
           port: 22
           timeout: 60s
           script: |
-            sudo docker stop dnd2 || true
-            sudo docker rm dnd2 || true
+            sudo docker stop otboo || true
+            sudo docker rm otboo || true
             sudo docker rmi buzzin2426/otboo:latest || true
             sudo docker pull buzzin2426/otboo:latest
-            sudo docker run -it -d -p 8080:8080 --name buzzin2426 buzzin2426/otboo:latest
+            sudo docker run -it -d -p 8080:8080 --name otboo buzzin2426/otboo:latest
 
       - name: Remove GitHub IP from AWS security group
         run: |
