@@ -58,7 +58,9 @@ jobs:
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > key.pem
           KEY_CONTENT=$(cat key.pem)
-          echo "::set-output name=key::$KEY_CONTENT"
+          echo "key<<EOF" >> $GITHUB_OUTPUT
+          echo "$KEY_CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: SSH to EC2 and deploy Docker container
         uses: appleboy/ssh-action@v0.1.6
