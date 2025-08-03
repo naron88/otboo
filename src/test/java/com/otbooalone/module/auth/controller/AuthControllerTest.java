@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WithMockUser
 @WebMvcTest(authController.class)
-class authControllerTest {
+class AuthControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
