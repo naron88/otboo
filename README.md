@@ -1,0 +1,1 @@
+[![codecov](https://codecov.io/gh/naron88/otboo/graph/badge.svg?token=ZRFF271763)](https://codecov.io/gh/naron88/otboo)
