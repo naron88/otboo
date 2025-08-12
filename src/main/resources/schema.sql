@@ -1,8 +1,8 @@
 CREATE TABLE "users"
 (
     id                      UUID          PRIMARY KEY,
-    created_at              TIMESTAMPTZ   NOT NULL,
-    updated_at              TIMESTAMPTZ,
+    created_at              TIMESTAMP WITH TIME ZONE   NOT NULL,
+    updated_at              TIMESTAMP WITH TIME ZONE,
     email                   VARCHAR(100)  NOT NULL,
     name                    VARCHAR       NOT NULL,
     password                VARCHAR       NOT NULL,
@@ -21,6 +21,6 @@ create table auth_tokens
     user_id       UUID          NOT NULL UNIQUE,
     access_token  TEXT,
     refresh_token TEXT,
-    created_at    TIMESTAMPTZ   NOT NULL,
-    updated_at    TIMESTAMPTZ
+    created_at    TIMESTAMP WITH TIME ZONE  NOT NULL,
+    updated_at    TIMESTAMP WITH TIME ZONE
 );
