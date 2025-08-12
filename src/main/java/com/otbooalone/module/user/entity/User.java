@@ -86,4 +86,8 @@ public class User {
     this.role = role;
     this.locked = false;
   }
+
+  public void lock() {
+    locked = true;
+  }
 }
