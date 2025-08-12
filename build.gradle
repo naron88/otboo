@@ -33,6 +33,15 @@ jacocoTestReport {
         xml.required = true
         html.required = true
     }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'com/otbooalone/global/**',
+                    'com/otbooalone/OtbooAloneApplication.class',
+            ])
+        }))
+    }
 }
 
 repositories {
@@ -49,6 +58,9 @@ dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // 인증
+    implementation 'com.nimbusds:nimbus-jose-jwt:10.3'
 
     // DB
     // - 운영 DB

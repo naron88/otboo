@@ -1,9 +1,9 @@
-package com.otbooalone.module.auth.controller;
+package com.otbooalone.module.user.controller;
 
 import com.otbooalone.module.auth.dto.request.UserCreateRequest;
-import com.otbooalone.module.auth.service.AuthService;
 import com.otbooalone.module.user.dto.data.UserDto;
 import com.otbooalone.module.user.entity.User.Role;
+import com.otbooalone.module.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
-public class authController {
+public class UserController {
 
-  private final AuthService authService;
+  private final UserService userService;
 
   // 회원가입
   @PostMapping
   public ResponseEntity<UserDto> create(@Valid @RequestBody UserCreateRequest request) {
     log.info("회원 가입 요청: name = {}, email = {}", request.name(), request.email());
 
-    UserDto response = authService.create(request, Role.USER);
+    UserDto response = userService.create(request, Role.USER);
 
     log.info("회원 가입 응답: name = {}, email = {}", response.name(), response.email());
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
