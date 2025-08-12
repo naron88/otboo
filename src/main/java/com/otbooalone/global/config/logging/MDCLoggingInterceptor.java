@@ -1,4 +1,4 @@
-package com.otbooalone.global.config;
+package com.otbooalone.global.config.logging;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

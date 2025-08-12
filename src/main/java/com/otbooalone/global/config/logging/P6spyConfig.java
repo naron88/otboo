@@ -1,4 +1,4 @@
-package com.otbooalone.global.config;
+package com.otbooalone.global.config.logging;
 
 import com.otbooalone.global.infra.logging.P6spyPrettySqlFormatter;
 import com.p6spy.engine.spy.P6SpyOptions;
