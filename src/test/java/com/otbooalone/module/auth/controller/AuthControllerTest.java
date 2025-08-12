@@ -1,65 +1,82 @@
 package com.otbooalone.module.auth.controller;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.otbooalone.module.auth.dto.request.UserCreateRequest;
+import com.otbooalone.module.auth.entity.AuthCookieNames;
+import com.otbooalone.module.auth.entity.GeneratedToken;
 import com.otbooalone.module.auth.service.AuthService;
-import com.otbooalone.module.user.dto.data.UserDto;
-import com.otbooalone.module.user.entity.User.Role;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WithMockUser
-@WebMvcTest(authController.class)
+@WebMvcTest(AuthController.class)
 class AuthControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
 
-  @Autowired
-  private ObjectMapper objectMapper;
-
   @MockitoBean
   private AuthService authService;
 
-  @Nested
-  @DisplayName("회원 가입")
-  class Create {
+  @Test
+  void testGetCsrfToken() throws Exception {
+    mockMvc.perform(get("/api/auth/csrf-token"))
+        .andExpect(status().isOk());
+  }
 
-    @Test
-    @DisplayName("회원 가입 성공")
-    void create_success() throws Exception {
+  @Test
+  void testGetAccessToken_Success() throws Exception {
+    String refreshToken = "validRefreshToken";
+    String expectedAccessToken = "access-token";
 
-      // given
-      UserCreateRequest request = new UserCreateRequest("test", "test@test.com", "qwer1234!");
+    when(authService.getAccessTokenByRefreshToken(refreshToken)).thenReturn(expectedAccessToken);
 
-      UserDto response = new UserDto(UUID.randomUUID(), LocalDateTime.now(), request.email(),
-          request.name(), Role.USER, List.of(), false);
+    mockMvc.perform(get("/api/auth/me")
+            .cookie(new Cookie(AuthCookieNames.REFRESH_TOKEN_COOKIE_NAME, refreshToken)))
+        .andExpect(status().isOk())
+        .andExpect(content().string(expectedAccessToken));
+  }
 
-      given(authService.create(request, Role.USER)).willReturn(response);
+  @Test
+  void testGetAccessToken_MissingRefreshToken() throws Exception {
+    mockMvc.perform(get("/api/auth/me"))
+        .andExpect(status().isUnauthorized()); // 인증 요구 예외일 경우 상태 코드 맞춰서 변경
+  }
 
-      // when, then
-      mockMvc.perform(post("/api/users")
-              .contentType(MediaType.APPLICATION_JSON)
-              .content(objectMapper.writeValueAsString(request))
-              .accept(MediaType.APPLICATION_JSON)
-              .with(csrf()))
-          .andExpect(status().isCreated());
-    }
+  @Test
+  void testRefreshTokens_Success() throws Exception {
+    String refreshToken = "validRefreshToken";
+    String newAccessToken = "newAccessToken";
+    String newRefreshToken = "newRefreshToken";
+
+    GeneratedToken generatedToken = new GeneratedToken(newAccessToken, newRefreshToken);
+
+    when(authService.refreshTokens(refreshToken)).thenReturn(generatedToken);
+
+    mockMvc.perform(post("/api/auth/refresh")
+            .cookie(new Cookie(AuthCookieNames.REFRESH_TOKEN_COOKIE_NAME, refreshToken))
+            .with(csrf()))
+        .andExpect(status().isOk())
+        .andExpect(content().string(newAccessToken))
+        .andExpect(cookie().value(AuthCookieNames.REFRESH_TOKEN_COOKIE_NAME, newRefreshToken));
+  }
+
+  @Test
+  void testRefreshTokens_MissingRefreshToken() throws Exception {
+    mockMvc.perform(post("/api/auth/refresh")
+            .with(csrf()))
+        .andExpect(status().isBadRequest());
   }
 }
