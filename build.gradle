@@ -37,9 +37,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    'com/otbooalone/config/**',
-                    'com/otbooalone/infra/**',
-                    'com/part4/team09/otboo/OtbooAloneApplication.class',
+                    'com/otbooalone/global/**',
+                    'com/otbooalone/OtbooAloneApplication.class',
             ])
         }))
     }
