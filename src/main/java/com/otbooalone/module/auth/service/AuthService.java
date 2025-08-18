@@ -2,8 +2,6 @@ package com.otbooalone.module.auth.service;
 
 import com.otbooalone.module.auth.dto.data.AuthUserDto;
 import com.otbooalone.module.auth.dto.data.TempPasswordMetadata;
-import com.otbooalone.module.auth.dto.request.SignInRequest;
-import com.otbooalone.module.auth.dto.request.UserCreateRequest;
 import com.otbooalone.module.auth.entity.AuthToken;
 import com.otbooalone.module.auth.entity.GeneratedToken;
 import com.otbooalone.module.auth.exception.common.AccountLockedException;
@@ -13,16 +11,11 @@ import com.otbooalone.module.auth.mapper.AuthUserMapper;
 import com.otbooalone.module.auth.provider.JwtTokenProvider;
 import com.otbooalone.module.auth.repository.AuthTokenRepository;
 import com.otbooalone.module.user.repository.UserRepository;
-import com.otbooalone.module.user.dto.data.UserDto;
 import com.otbooalone.module.user.entity.User;
-import com.otbooalone.module.user.entity.User.Role;
-import com.otbooalone.module.user.mapper.UserMapper;
-import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -90,4 +90,12 @@ public class User {
   public void lock() {
     locked = true;
   }
+
+  public void updateRole(Role role) {
+    this.role = role;
+  }
+
+  public void updateLocked(boolean locked) {
+    this.locked = locked;
+  }
 }

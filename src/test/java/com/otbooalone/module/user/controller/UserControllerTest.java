@@ -1,14 +1,13 @@
 package com.otbooalone.module.user.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.otbooalone.module.auth.dto.request.UserCreateRequest;
 import com.otbooalone.module.user.dto.data.UserDto;
+import com.otbooalone.module.user.dto.request.UserCreateRequest;
 import com.otbooalone.module.user.entity.User.Role;
 import com.otbooalone.module.user.service.UserService;
 import java.time.LocalDateTime;
