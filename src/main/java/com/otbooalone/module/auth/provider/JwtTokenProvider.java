@@ -85,7 +85,7 @@ public class JwtTokenProvider {
 
     Instant now = Instant.now();
 
-    Instant expiry = now.plusSeconds(jwtProperty.getAccessToken().getValiditySeconds());
+    Instant expiry = now.plusSeconds(jwtProperty.accessToken().validitySeconds());
 
     String tempPasswordExpiresAtStr = tempPassword.isUsed()
       ? tempPassword.tempPasswordExpiresAt().toString()
@@ -110,7 +110,7 @@ public class JwtTokenProvider {
 
     Instant expiry = tempPassword.isUsed()
       ? tempPassword.expiresAtAsInstant()
-      : now.plusSeconds(jwtProperty.getRefreshToken().getValiditySeconds());
+      : now.plusSeconds(jwtProperty.refreshToken().validitySeconds());
 
     String tempPasswordExpiresAtStr = tempPassword.isUsed()
       ? tempPassword.tempPasswordExpiresAt().toString()
@@ -135,7 +135,7 @@ public class JwtTokenProvider {
     Instant now = Instant.now();
 
     JWTClaimsSet.Builder jwtClaimsSet = new JWTClaimsSet.Builder()
-      .issuer(jwtProperty.getIssuer())
+      .issuer(jwtProperty.issuer())
       .subject(subject)
       .issueTime(Date.from(now))
       .expirationTime(Date.from(expiresAt))
@@ -305,13 +305,13 @@ public class JwtTokenProvider {
 
   // 시크릿 키 생성
   private SecretKey getSingingKey() {
-    byte[] keyBytes = jwtProperty.getSecret().getBytes(StandardCharsets.UTF_8);
+    byte[] keyBytes = jwtProperty.secret().getBytes(StandardCharsets.UTF_8);
     return new SecretKeySpec(keyBytes, "HmacSHA256");
   }
 
   // 키 검사
   private void validateSecretKey() {
-    String secret = jwtProperty.getSecret();
+    String secret = jwtProperty.secret();
     if (secret == null || secret.length() < 32) {
       throw new IllegalArgumentException("JWT 시크릿 키는 32자 이상이어야 합니다.(길이: {})" +
         (secret != null ? secret.length() : 0)
