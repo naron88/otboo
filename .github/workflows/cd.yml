@@ -82,7 +82,7 @@ jobs:
               -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
               -e ADMIN_NAME=${{ secrets.ADMIN_NAME }} \
               -e ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
-              -e ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
+              -e "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" \
               --name otboo buzzin2426/otboo:latest
 
       - name: Remove GitHub IP from AWS security group
