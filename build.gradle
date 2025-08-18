@@ -71,6 +71,12 @@ dependencies {
     // swagger ui
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4'
 
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
     // 실제 db에 전송되는 쿼리를 보기 위함
     implementation 'io.micrometer:micrometer-registry-prometheus'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'

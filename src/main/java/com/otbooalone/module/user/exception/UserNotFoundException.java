@@ -1,5 +1,7 @@
 package com.otbooalone.module.user.exception;
 
+import java.util.UUID;
+
 public class UserNotFoundException extends UserException {
 
   public UserNotFoundException() {
@@ -15,6 +17,12 @@ public class UserNotFoundException extends UserException {
   public static UserNotFoundException withUsername(String username) {
     UserNotFoundException exception = new UserNotFoundException();
     exception.addDetail("username", username);
+    return exception;
+  }
+
+  public static UserNotFoundException withId(UUID userId) {
+    UserNotFoundException exception = new UserNotFoundException();
+    exception.addDetail("userId", userId);
     return exception;
   }
 }

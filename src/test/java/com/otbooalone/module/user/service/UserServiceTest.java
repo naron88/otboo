@@ -5,8 +5,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-import com.otbooalone.module.auth.dto.request.UserCreateRequest;
 import com.otbooalone.module.user.dto.data.UserDto;
+import com.otbooalone.module.user.dto.request.UserCreateRequest;
 import com.otbooalone.module.user.entity.User;
 import com.otbooalone.module.user.entity.User.Role;
 import com.otbooalone.module.user.mapper.UserMapper;

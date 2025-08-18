@@ -1,4 +1,4 @@
-package com.otbooalone.module.auth.dto.request;
+package com.otbooalone.module.user.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
