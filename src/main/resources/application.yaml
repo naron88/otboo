@@ -31,6 +31,12 @@ admin:
   email: ${ADMIN_EMAIL:admin@admin.com}
   password: ${ADMIN_PASSWORD:admin1234!}
 
+storage:
+  type: local
+  local:
+    path: ${FILE_STORAGE_PATH:${user.dir}/fileStorage}
+resource:
+  path: fileStorage
 
 logging:
   level:

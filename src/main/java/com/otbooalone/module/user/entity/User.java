@@ -67,24 +67,40 @@ public class User {
 
   private UUID locationId;
 
-  public enum Gender {
-    MALE, FEMALE, OTHER
-  }
-
-  public enum Role {
-    USER, ADMIN
-  }
-
-  public static User createUser(String email, String name, String password, Role role) {
-    return new User(email, name, password, role);
-  }
-
   private User(String email, String name, String password, Role role) {
     this.email = email;
     this.name = name;
     this.password = password;
     this.role = role;
     this.locked = false;
+  }
+
+  public static User createUser(String email, String name, String password, Role role) {
+    return new User(email, name, password, role);
+  }
+
+  public void updateName(String name) {
+    this.name = name;
+  }
+
+  public void updateGender(Gender gender) {
+    this.gender = gender;
+  }
+
+  public void updateBirthDate(LocalDate birthDate) {
+    this.birthDate = birthDate;
+  }
+
+  public void updateTemperatureSensitivity(int temperatureSensitivity) {
+    this.temperatureSensitivity = temperatureSensitivity;
+  }
+
+  public void updateLocationId(UUID locationId) {
+    this.locationId = locationId;
+  }
+
+  public void updateImageUrl(String profileImageUrl) {
+    this.profileImageUrl = profileImageUrl;
   }
 
   public void lock() {
@@ -97,5 +113,13 @@ public class User {
 
   public void updateLocked(boolean locked) {
     this.locked = locked;
+  }
+
+  public enum Gender {
+    MALE, FEMALE, OTHER
+  }
+
+  public enum Role {
+    USER, ADMIN
   }
 }
